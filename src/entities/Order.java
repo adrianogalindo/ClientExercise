@@ -67,5 +67,24 @@ public class Order {
 		}
 		return sum;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Order moment: ");
+		sb.append(sdf.format(moment) + "\n");
+		sb.append("Order moment: ");
+		sb.append(status + "\n");
+		sb.append(client + "\n");
+		sb.append("Order items: \n");
+		for (OrderItem orderItens_ : orderItens) {
+			sb.append(orderItens_ + "\n");
+		}
+		sb.append("Total price: $");
+		sb.append(String.format("%.2f", total()));
+		return sb.toString();
+
+	}
+	
 }
 
