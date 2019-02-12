@@ -10,20 +10,21 @@ import entities.enums.OrderStatus;
 
 public class Order {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
+
 	private Date moment;
 	private OrderStatus status;
-	
+
 	private Client client;
-	
+
 	private List<OrderItem> orderItens = new ArrayList<>();
-	
+
 	public Order() {
 	}
-
-	public Order(Date moment, OrderStatus status) {
+	
+	public Order(Date moment, OrderStatus status, Client client) {
 		this.moment = moment;
 		this.status = status;
+		this.client = client;
 	}
 
 	public Date getMoment() {
@@ -38,43 +39,33 @@ public class Order {
 		return status;
 	}
 
-	public void setStatus(OrderStatus status) {
-		this.status = status;
+	//  This setter is not supposed to change the standard list
+	//	public void setOrderItens(List<OrderItem> orderItens) {
+	//		this.orderItens = orderItens;
+	//	}
+
+	public Client getClient() {
+		return client;
 	}
 
-	public List<OrderItem> getOrderItens() {
-		return orderItens;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
-//  This setter is not supposed to change the standard list
-//	public void setOrderItens(List<OrderItem> orderItens) {
-//		this.orderItens = orderItens;
-//	}
-	
 	public void addItem(OrderItem orderItens_) {
 		orderItens.add(orderItens_);
 	}
-	
+
 	public void removeItem(OrderItem orderItens_) {
 		orderItens.remove(orderItens_);
 	}
-	
-	public Double total(OrderItem orderItens) {
-			double sum;
-			Calendar cal = Calendar.getInstance();
-			for(OrderItem o : orderItens) {
-				cal.setTime(o.getDate());
-				int c_year = cal.get(Calendar.YEAR);
-				int c_month = 1 + cal.get(Calendar.MONTH); 
-				if( c_year == year && c_month == month) {
-					sum += c.totalValue();
-				}
-			}
-			return sum;
+
+	public Double total() {
+		double sum = 0.0;
+		for (OrderItem orderItens_ : orderItens) {
+			sum += orderItens_.subTotal();
 		}
+		return sum;
 	}
-	
-	
-	
-	
 }
+
